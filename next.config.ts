@@ -9,6 +9,10 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  experimental: {
+    workerThreads: false,
+    cpus: 1,
+  },
   // Packages with Cloudflare Workers (workerd) specific code
   // Read more: https://opennext.js.org/cloudflare/howtos/workerd
   serverExternalPackages: ['jose', 'pg-cloudflare'],
