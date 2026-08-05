@@ -69,6 +69,7 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    livestreams: Livestream;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -78,6 +79,7 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    livestreams: LivestreamsSelect<false> | LivestreamsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -161,6 +163,54 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "livestreams".
+ */
+export interface Livestream {
+  id: number;
+  title: string;
+  slug: string;
+  /**
+   * Paste the YouTube video link (e.g. https://www.youtube.com/watch?v=XYZ), embed link, or 11-character video ID.
+   */
+  youtubeUrl: string;
+  logoType: 'svg' | 'image';
+  /**
+   * Paste the SVG raw HTML code (e.g. <svg>...</svg>).
+   */
+  logoSvg?: string | null;
+  logoImage?: (number | null) | Media;
+  theme?: {
+    backgroundColor?: string | null;
+    textColor?: string | null;
+    buttonColor?: string | null;
+    buttonTextColor?: string | null;
+    font?:
+      | ('system-ui' | 'Inter' | 'Roboto' | 'Outfit' | 'Poppins' | 'Open Sans' | 'Montserrat' | 'Lato' | 'custom')
+      | null;
+    /**
+     * Enter the exact Google Font name (e.g. Playfair Display).
+     */
+    customFontName?: string | null;
+  };
+  chat?: {
+    chatRoomArn?: string | null;
+    chatEndpoint?: string | null;
+    websocketEndpoint?: string | null;
+  };
+  text?: {
+    placeholder?: string | null;
+    buttonText?: string | null;
+    instruction?: string | null;
+    successMessage?: string | null;
+    errorMessage?: string | null;
+    toastSuccessColor?: string | null;
+    toastErrorColor?: string | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -190,6 +240,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'livestreams';
+        value: number | Livestream;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -270,6 +324,48 @@ export interface MediaSelect<T extends boolean = true> {
   filesize?: T;
   width?: T;
   height?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "livestreams_select".
+ */
+export interface LivestreamsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  youtubeUrl?: T;
+  logoType?: T;
+  logoSvg?: T;
+  logoImage?: T;
+  theme?:
+    | T
+    | {
+        backgroundColor?: T;
+        textColor?: T;
+        buttonColor?: T;
+        buttonTextColor?: T;
+        font?: T;
+        customFontName?: T;
+      };
+  chat?:
+    | T
+    | {
+        chatRoomArn?: T;
+        chatEndpoint?: T;
+        websocketEndpoint?: T;
+      };
+  text?:
+    | T
+    | {
+        placeholder?: T;
+        buttonText?: T;
+        instruction?: T;
+        successMessage?: T;
+        errorMessage?: T;
+        toastSuccessColor?: T;
+        toastErrorColor?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
