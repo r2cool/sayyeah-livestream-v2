@@ -3,8 +3,16 @@ import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   images: {
+    unoptimized: true,
     localPatterns: [
       {
+        pathname: '/api/media/file/**',
+      },
+    ],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'sayyeah-livestream-v2.randy-1df.workers.dev',
         pathname: '/api/media/file/**',
       },
     ],
