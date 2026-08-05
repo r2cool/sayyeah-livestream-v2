@@ -30,6 +30,13 @@ const isCLI = process.argv.some((value) => {
     resolved.endsWith(path.join('next', 'dist', 'bin', 'next'))
   )
 })
+
+const isPayloadCLI = process.argv.some((value) => {
+  const resolved = realpath(value)
+  if (!resolved) return false
+
+  return resolved.endsWith(path.join('payload', 'bin.js'))
+})
 const isProduction = process.env.NODE_ENV === 'production'
 
 const createLog =
@@ -52,10 +59,13 @@ const cloudflareLogger = {
   silent: () => { },
 } as any // Use PayloadLogger type when it's exported
 
-const cloudflare =
-  isCLI || !isProduction
-    ? await getCloudflareContextFromWrangler()
-    : await getCloudflareContext({ async: true })
+// const cloudflare =
+//   isCLI || !isProduction
+//     ? await getCloudflareContextFromWrangler()
+//     : await getCloudflareContext({ async: true })
+const cloudflare = isPayloadCLI
+  ? await getCloudflareContextFromWrangler()
+  : await getCloudflareContext({ async: true })
 
 export default buildConfig({
   admin: {

@@ -185,8 +185,7 @@ export interface Livestream {
     buttonColor?: string | null;
     buttonTextColor?: string | null;
     font?:
-      | ('system-ui' | 'Inter' | 'Roboto' | 'Outfit' | 'Poppins' | 'Open Sans' | 'Montserrat' | 'Lato' | 'custom')
-      | null;
+      ('system-ui' | 'Inter' | 'Roboto' | 'Outfit' | 'Poppins' | 'Open Sans' | 'Montserrat' | 'Lato' | 'custom') | null;
     /**
      * Enter the exact Google Font name (e.g. Playfair Display).
      */
