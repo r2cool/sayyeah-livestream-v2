@@ -101,17 +101,19 @@ export default function ChatClient({
 
   const showToast = (text: string, bgColor: string) => {
     if (window.Toastify) {
-      window.Toastify({
-        text,
-        duration: bgColor === toastErrorColor ? 5000 : 2000,
-        close: false,
-        gravity: 'bottom',
-        position: 'center',
-        stopOnFocus: false,
-        style: {
-          background: bgColor,
-        },
-      }).showToast()
+      window
+        .Toastify({
+          text,
+          duration: bgColor === toastErrorColor ? 5000 : 2000,
+          close: false,
+          gravity: 'bottom',
+          position: 'center',
+          stopOnFocus: false,
+          style: {
+            background: bgColor,
+          },
+        })
+        .showToast()
     } else {
       alert(text)
     }
@@ -165,7 +167,7 @@ export default function ChatClient({
       />
       <Script src="https://cdn.jsdelivr.net/npm/toastify-js" strategy="afterInteractive" />
 
-      <div className="p-12 md:p-0 mx-auto max-w-screen-lg relative">
+      <div className=" md:p-0 mx-auto max-w-screen-lg relative">
         <div>
           <div className="relative w-full">
             <input
