@@ -4,6 +4,7 @@ export const Livestreams: CollectionConfig = {
   slug: 'livestreams',
   admin: {
     useAsTitle: 'title',
+    preview: ({ slug }) => `https://live.studiosayyeah.nl/${slug}`,
     defaultColumns: ['title', 'slug', 'createdAt'],
   },
   access: {
@@ -57,7 +58,8 @@ export const Livestreams: CollectionConfig = {
       required: true,
       label: 'YouTube URL or Video ID',
       admin: {
-        description: 'Paste the YouTube video link (e.g. https://www.youtube.com/watch?v=XYZ), embed link, or 11-character video ID.',
+        description:
+          'Paste the YouTube video link (e.g. https://www.youtube.com/watch?v=XYZ), embed link, or 11-character video ID.',
       },
     },
     {
@@ -201,7 +203,8 @@ export const Livestreams: CollectionConfig = {
         {
           name: 'errorMessage',
           type: 'text',
-          defaultValue: 'Er is iets misgegaan. Ververs de pagina en probeer opnieuw uw bericht in te sturen',
+          defaultValue:
+            'Er is iets misgegaan. Ververs de pagina en probeer opnieuw uw bericht in te sturen',
           label: 'Error Message Toast',
         },
         {
