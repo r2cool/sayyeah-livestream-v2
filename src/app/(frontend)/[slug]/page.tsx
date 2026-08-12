@@ -119,7 +119,7 @@ export default async function LivestreamPage(props: { params: Params }): Promise
           alt={logoImg.alt || 'Logo'}
           width={logoImg.width || 150}
           height={logoImg.height || 40}
-          style={{ objectFit: 'contain', maxHeight: '40px', width: 'auto' }}
+          style={{ objectFit: 'contain', maxHeight: '80px', width: 'auto' }}
         />
       )
     }
@@ -141,7 +141,7 @@ export default async function LivestreamPage(props: { params: Params }): Promise
         style={{ background: backgroundColor, color: textColor, minHeight: '100vh', width: '100%' }}
       >
         <div className="container mx-auto max-w-screen-lg pb-12">
-          <div className="p-12 md:p-0 mx-auto max-w-screen-lg relative">
+          <div className="p-4 md:p-0 mx-auto max-w-screen-lg relative">
             <div className="mt-8 mb-4 flex items-center justify-between">{logoHtml}</div>
             <LivestreamContentContainer
               accessMode={stream.accessMode as any}
