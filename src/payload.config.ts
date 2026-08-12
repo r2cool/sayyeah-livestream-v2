@@ -63,7 +63,7 @@ const cloudflareLogger = {
 //   isCLI || !isProduction
 //     ? await getCloudflareContextFromWrangler()
 //     : await getCloudflareContext({ async: true })
-const cloudflare = isPayloadCLI
+const cloudflare = isPayloadCLI || process.env.NODE_ENV !== 'production'
   ? await getCloudflareContextFromWrangler()
   : await getCloudflareContext({ async: true })
 

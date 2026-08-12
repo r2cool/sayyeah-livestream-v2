@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Script from 'next/script'
 import type { Metadata } from 'next'
 import config from '@/payload.config'
-import ChatClient from './ChatClient'
+import LivestreamContentContainer from './LivestreamContentContainer'
 
 type Params = Promise<{ slug: string }>
 
@@ -146,32 +146,25 @@ export default async function LivestreamPage(props: { params: Params }): Promise
             <div className="mt-8 mb-4 flex items-center justify-between">
               {logoHtml}
             </div>
-            <iframe
-              className="aspect-video"
-              width="100%"
-              height="100%"
-              src={embedUrl}
-              title={stream.title}
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-            ></iframe>
+            <LivestreamContentContainer
+              accessMode={stream.accessMode as any}
+              password={stream.password}
+              embedUrl={embedUrl}
+              streamTitle={stream.title}
+              chatRoomArn={stream.chat?.chatRoomArn || ''}
+              chatEndpoint={stream.chat?.chatEndpoint || ''}
+              websocketEndpoint={stream.chat?.websocketEndpoint || ''}
+              placeholder={stream.text?.placeholder || ''}
+              buttonText={stream.text?.buttonText || ''}
+              instruction={stream.text?.instruction || ''}
+              successMessage={stream.text?.successMessage || ''}
+              errorMessage={stream.text?.errorMessage || ''}
+              buttonColor={buttonColor}
+              buttonTextColor={buttonTextColor}
+              toastSuccessColor={stream.text?.toastSuccessColor || ''}
+              toastErrorColor={stream.text?.toastErrorColor || ''}
+            />
           </div>
-
-          <ChatClient
-            chatRoomArn={stream.chat?.chatRoomArn || ''}
-            chatEndpoint={stream.chat?.chatEndpoint || ''}
-            websocketEndpoint={stream.chat?.websocketEndpoint || ''}
-            placeholder={stream.text?.placeholder || ''}
-            buttonText={stream.text?.buttonText || ''}
-            instruction={stream.text?.instruction || ''}
-            successMessage={stream.text?.successMessage || ''}
-            errorMessage={stream.text?.errorMessage || ''}
-            buttonColor={buttonColor}
-            buttonTextColor={buttonTextColor}
-            toastSuccessColor={stream.text?.toastSuccessColor || ''}
-            toastErrorColor={stream.text?.toastErrorColor || ''}
-          />
         </div>
       </div>
     </>

@@ -169,6 +169,11 @@ export interface Livestream {
   id: number;
   title: string;
   slug: string;
+  accessMode: 'public' | 'password' | 'username';
+  /**
+   * Enter the password required to view this livestream.
+   */
+  password?: string | null;
   /**
    * Paste the YouTube video link (e.g. https://www.youtube.com/watch?v=XYZ), embed link, or 11-character video ID.
    */
@@ -331,6 +336,8 @@ export interface MediaSelect<T extends boolean = true> {
 export interface LivestreamsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  accessMode?: T;
+  password?: T;
   youtubeUrl?: T;
   logoType?: T;
   logoSvg?: T;

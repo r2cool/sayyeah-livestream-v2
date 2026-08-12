@@ -23,6 +23,7 @@ interface ChatClientProps {
   buttonTextColor: string
   toastSuccessColor: string
   toastErrorColor: string
+  initialUsername?: string
 }
 
 export default function ChatClient({
@@ -38,9 +39,10 @@ export default function ChatClient({
   buttonTextColor,
   toastSuccessColor,
   toastErrorColor,
+  initialUsername,
 }: ChatClientProps): React.JSX.Element {
   const [msg, setMsg] = useState('')
-  const [username] = useState(() => `${new Date().getTime()}`)
+  const [username] = useState(() => initialUsername || `${new Date().getTime()}`)
   const connectionRef = useRef<WebSocket | null>(null)
 
   useEffect(() => {

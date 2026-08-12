@@ -2,3 +2,6 @@
 
 // Load .env files
 import 'dotenv/config'
+import { initOpenNextCloudflareForDev } from '@opennextjs/cloudflare'
+
+initOpenNextCloudflareForDev()

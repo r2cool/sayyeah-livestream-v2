@@ -26,6 +26,32 @@ export const Livestreams: CollectionConfig = {
       index: true,
     },
     {
+      name: 'accessMode',
+      type: 'select',
+      defaultValue: 'public',
+      options: [
+        { label: 'Public', value: 'public' },
+        { label: 'Password', value: 'password' },
+        { label: 'Username Required', value: 'username' },
+      ],
+      required: true,
+    },
+    {
+      name: 'password',
+      type: 'text',
+      label: 'Password',
+      admin: {
+        condition: (data) => data?.accessMode === 'password',
+        description: 'Enter the password required to view this livestream.',
+      },
+      validate: (value: string | null | undefined, { data }: any) => {
+        if (data?.accessMode === 'password' && !value) {
+          return 'Password is required when access mode is set to Password'
+        }
+        return true
+      },
+    },
+    {
       name: 'youtubeUrl',
       type: 'text',
       required: true,
