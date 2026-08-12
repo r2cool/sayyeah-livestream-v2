@@ -210,6 +210,21 @@ export interface Livestream {
     toastSuccessColor?: string | null;
     toastErrorColor?: string | null;
   };
+  text_password_form?: {
+    title?: string | null;
+    instruction?: string | null;
+    labelText?: string | null;
+    placeholder?: string | null;
+    buttonText?: string | null;
+    errorMessage?: string | null;
+  };
+  text_username_form?: {
+    title?: string | null;
+    instruction?: string | null;
+    labelText?: string | null;
+    placeholder?: string | null;
+    buttonText?: string | null;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -369,6 +384,25 @@ export interface LivestreamsSelect<T extends boolean = true> {
         errorMessage?: T;
         toastSuccessColor?: T;
         toastErrorColor?: T;
+      };
+  text_password_form?:
+    | T
+    | {
+        title?: T;
+        instruction?: T;
+        labelText?: T;
+        placeholder?: T;
+        buttonText?: T;
+        errorMessage?: T;
+      };
+  text_username_form?:
+    | T
+    | {
+        title?: T;
+        instruction?: T;
+        labelText?: T;
+        placeholder?: T;
+        buttonText?: T;
       };
   updatedAt?: T;
   createdAt?: T;

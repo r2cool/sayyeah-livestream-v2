@@ -221,5 +221,86 @@ export const Livestreams: CollectionConfig = {
         },
       ],
     },
+    {
+      name: 'text_password_form',
+      type: 'group',
+      label: 'Password Form',
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+          defaultValue: 'Wachtwoord Vereist',
+          label: 'Title Text',
+        },
+        {
+          name: 'instruction',
+          type: 'text',
+          defaultValue: 'Voer het wachtwoord in om toegang te krijgen tot de livestream.',
+          label: 'Instruction text under password form',
+        },
+        {
+          name: 'labelText',
+          type: 'text',
+          defaultValue: 'Wachtwoord',
+          label: 'Password Label',
+        },
+        {
+          name: 'placeholder',
+          type: 'text',
+          defaultValue: 'Vul hier uw wachtwoord in',
+          label: 'Password Input Placeholder',
+        },
+        {
+          name: 'buttonText',
+          type: 'text',
+          defaultValue: 'Stream ontgrendelen',
+          label: 'Button Text',
+        },
+        {
+          name: 'errorMessage',
+          type: 'text',
+          defaultValue: 'Onjuist wachtwoord. Probeer het opnieuw.',
+          label: 'Error Message Toast',
+        },
+      ],
+    },
+    {
+      name: 'text_username_form',
+      type: 'group',
+      label: 'Username Form',
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+          defaultValue: 'Gebruikersnaam Invoeren',
+          label: 'Title Text',
+        },
+        {
+          name: 'instruction',
+          type: 'text',
+          defaultValue:
+            'Voer een gebruikersnaam in om deel te nemen aan de chat en de stream te bekijken.',
+          label: 'Instruction text under password form',
+        },
+        {
+          name: 'labelText',
+          type: 'text',
+          defaultValue: 'Gebruikersnaam',
+          label: 'Username Label',
+        },
+        {
+          name: 'placeholder',
+          type: 'text',
+          defaultValue: 'Kies een gebruikersnaam',
+          label: 'Username Input Placeholder',
+        },
+        {
+          name: 'buttonText',
+          type: 'text',
+          defaultValue: 'Deelnemen',
+          label: 'Button Text',
+        },
+      ],
+    },
   ],
 }

@@ -53,7 +53,7 @@ function getYoutubeEmbedUrl(urlOrId: string): string {
   if (!videoId) {
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/
     const match = urlOrId.match(regExp)
-    videoId = (match && match[2].length === 11) ? match[2] : urlOrId
+    videoId = match && match[2].length === 11 ? match[2] : urlOrId
   }
   return `https://www.youtube.com/embed/${videoId}?si=HFR4tI7UnMP2ZOjM`
 }
@@ -108,10 +108,7 @@ export default async function LivestreamPage(props: { params: Params }): Promise
   let logoHtml: React.ReactNode = null
   if (stream.logoType === 'svg' && stream.logoSvg) {
     logoHtml = (
-      <div
-        dangerouslySetInnerHTML={{ __html: stream.logoSvg }}
-        style={{ fill: textColor }}
-      />
+      <div dangerouslySetInnerHTML={{ __html: stream.logoSvg }} style={{ fill: textColor }} />
     )
   } else if (stream.logoType === 'image' && stream.logoImage) {
     const logoImg: any = stream.logoImage
@@ -140,12 +137,12 @@ export default async function LivestreamPage(props: { params: Params }): Promise
       {globalStyles && <style dangerouslySetInnerHTML={{ __html: globalStyles }} />}
       <Script src="https://cdn.tailwindcss.com" strategy="beforeInteractive" />
 
-      <div style={{ background: backgroundColor, color: textColor, minHeight: '100vh', width: '100%' }}>
+      <div
+        style={{ background: backgroundColor, color: textColor, minHeight: '100vh', width: '100%' }}
+      >
         <div className="container mx-auto max-w-screen-lg pb-12">
           <div className="p-12 md:p-0 mx-auto max-w-screen-lg relative">
-            <div className="mt-8 mb-4 flex items-center justify-between">
-              {logoHtml}
-            </div>
+            <div className="mt-8 mb-4 flex items-center justify-between">{logoHtml}</div>
             <LivestreamContentContainer
               accessMode={stream.accessMode as any}
               password={stream.password}
@@ -163,6 +160,17 @@ export default async function LivestreamPage(props: { params: Params }): Promise
               buttonTextColor={buttonTextColor}
               toastSuccessColor={stream.text?.toastSuccessColor || ''}
               toastErrorColor={stream.text?.toastErrorColor || ''}
+              title_username_form={stream.text_username_form?.title || ''}
+              instruction_username_form={stream.text_username_form?.instruction || ''}
+              label_username_form={stream.text_username_form?.labelText || ''}
+              placeholder_username_form={stream.text_username_form?.placeholder || ''}
+              buttonText_username_form={stream.text_username_form?.buttonText || ''}
+              title_password_form={stream.text_password_form?.title || ''}
+              instruction_password_form={stream.text_password_form?.instruction || ''}
+              label_password_form={stream.text_password_form?.labelText || ''}
+              placeholder_password_form={stream.text_password_form?.placeholder || ''}
+              buttonText_password_form={stream.text_password_form?.buttonText || ''}
+              errorText_password_form={stream.text_password_form?.errorMessage || ''}
             />
           </div>
         </div>

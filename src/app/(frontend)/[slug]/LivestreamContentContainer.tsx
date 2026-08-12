@@ -20,6 +20,17 @@ interface LivestreamContentContainerProps {
   buttonTextColor: string
   toastSuccessColor: string
   toastErrorColor: string
+  title_username_form: string
+  instruction_username_form: string
+  label_username_form: string
+  placeholder_username_form: string
+  buttonText_username_form: string
+  title_password_form: string
+  instruction_password_form: string
+  label_password_form: string
+  placeholder_password_form: string
+  buttonText_password_form: string
+  errorText_password_form: string
 }
 
 export default function LivestreamContentContainer({
@@ -39,6 +50,17 @@ export default function LivestreamContentContainer({
   buttonTextColor,
   toastSuccessColor,
   toastErrorColor,
+  title_username_form,
+  instruction_username_form,
+  label_username_form,
+  placeholder_username_form,
+  buttonText_username_form,
+  title_password_form,
+  instruction_password_form,
+  label_password_form,
+  placeholder_password_form,
+  buttonText_password_form,
+  errorText_password_form,
 }: LivestreamContentContainerProps): React.JSX.Element {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     return !accessMode || accessMode === 'public'
@@ -58,7 +80,7 @@ export default function LivestreamContentContainer({
       setIsAuthenticated(true)
       setErrorMsg('')
     } else {
-      setErrorMsg('Onjuist wachtwoord. Probeer het opnieuw.')
+      setErrorMsg(errorText_password_form)
     }
   }
 
@@ -82,32 +104,51 @@ export default function LivestreamContentContainer({
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] px-4 py-8">
         <div className="w-full max-w-md bg-white/40 backdrop-blur-xl border border-white/30 rounded-3xl p-8 md:p-10 shadow-2xl transition-all duration-300 transform hover:scale-[1.01]">
-          
           {/* Header Icon */}
           <div className="flex justify-center mb-6">
-            <div 
+            <div
               className="p-4 rounded-full flex items-center justify-center bg-white/60 shadow-inner"
               style={{ color: buttonColor }}
             >
               {accessMode === 'password' ? (
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                <svg
+                  className="w-8 h-8"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                  />
                 </svg>
               ) : (
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                <svg
+                  className="w-8 h-8"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                  />
                 </svg>
               )}
             </div>
           </div>
 
           <h2 className="text-2xl font-bold text-center mb-2 tracking-tight">
-            {accessMode === 'password' ? 'Wachtwoord Vereist' : 'Gebruikersnaam Invoeren'}
+            {accessMode === 'password' ? title_password_form : title_username_form}
           </h2>
           <p className="text-center text-sm opacity-80 mb-8">
-            {accessMode === 'password' 
-              ? 'Voer het wachtwoord in om toegang te krijgen tot de livestream.' 
-              : 'Voer een gebruikersnaam in om deel te nemen aan de chat en de stream te bekijken.'}
+            {accessMode === 'password' ? instruction_password_form : instruction_username_form}
           </p>
 
           {/* Form */}
@@ -115,13 +156,13 @@ export default function LivestreamContentContainer({
             <form onSubmit={handlePasswordSubmit} className="space-y-4">
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider mb-2 opacity-75">
-                  Wachtwoord
+                  {label_password_form}
                 </label>
                 <input
                   type="password"
                   value={passwordInput}
                   onChange={(e) => setPasswordInput(e.target.value)}
-                  placeholder="Voer wachtwoord in"
+                  placeholder={placeholder_password_form}
                   className="w-full px-4 py-3 rounded-xl border border-gray-300/80 bg-white/70 focus:outline-none focus:ring-2 transition-all text-black"
                   style={{ '--tw-ring-color': buttonColor } as any}
                   required
@@ -131,7 +172,11 @@ export default function LivestreamContentContainer({
               {errorMsg && (
                 <div className="text-sm font-medium text-red-600 bg-red-50/80 border border-red-200/50 px-3 py-2 rounded-lg flex items-center gap-2">
                   <svg className="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd"/>
+                    <path
+                      fillRule="evenodd"
+                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                      clipRule="evenodd"
+                    />
                   </svg>
                   <span>{errorMsg}</span>
                 </div>
@@ -142,20 +187,20 @@ export default function LivestreamContentContainer({
                 className="w-full py-3 rounded-xl font-bold transition-all shadow-lg hover:opacity-95 active:scale-[0.98] mt-2"
                 style={{ backgroundColor: buttonColor, color: buttonTextColor }}
               >
-                Stream Ontgrendelen
+                {buttonText_password_form}
               </button>
             </form>
           ) : (
             <form onSubmit={handleUsernameSubmit} className="space-y-4">
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider mb-2 opacity-75">
-                  Gebruikersnaam
+                  {label_username_form}
                 </label>
                 <input
                   type="text"
                   value={usernameInput}
                   onChange={(e) => setUsernameInput(e.target.value)}
-                  placeholder="Kies een gebruikersnaam"
+                  placeholder={placeholder_username_form}
                   maxLength={30}
                   className="w-full px-4 py-3 rounded-xl border border-gray-300/80 bg-white/70 focus:outline-none focus:ring-2 transition-all text-black"
                   style={{ '--tw-ring-color': buttonColor } as any}
@@ -166,7 +211,11 @@ export default function LivestreamContentContainer({
               {errorMsg && (
                 <div className="text-sm font-medium text-red-600 bg-red-50/80 border border-red-200/50 px-3 py-2 rounded-lg flex items-center gap-2">
                   <svg className="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd"/>
+                    <path
+                      fillRule="evenodd"
+                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                      clipRule="evenodd"
+                    />
                   </svg>
                   <span>{errorMsg}</span>
                 </div>
@@ -177,7 +226,7 @@ export default function LivestreamContentContainer({
                 className="w-full py-3 rounded-xl font-bold transition-all shadow-lg hover:opacity-95 active:scale-[0.98] mt-2"
                 style={{ backgroundColor: buttonColor, color: buttonTextColor }}
               >
-                Deelnemen
+                {buttonText_username_form}
               </button>
             </form>
           )}
