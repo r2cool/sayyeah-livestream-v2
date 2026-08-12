@@ -1,10 +1,6 @@
 import React from 'react'
-import { useEffect } from 'react'
+import { redirect } from 'next/navigation'
 
 export default function HomePage(): React.ReactNode {
-  useEffect(() => {
-    window.location.href = 'https://sayyeah.nl/'
-  }, [])
-
-  return <p>Redirecting...</p>
+  redirect('https://sayyeah.nl/')
 }
