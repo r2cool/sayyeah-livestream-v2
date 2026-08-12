@@ -31,6 +31,7 @@ interface LivestreamContentContainerProps {
   placeholder_password_form: string
   buttonText_password_form: string
   errorText_password_form: string
+  streamSlug: string
 }
 
 export default function LivestreamContentContainer({
@@ -61,6 +62,7 @@ export default function LivestreamContentContainer({
   placeholder_password_form,
   buttonText_password_form,
   errorText_password_form,
+  streamSlug,
 }: LivestreamContentContainerProps): React.JSX.Element {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     return !accessMode || accessMode === 'public'

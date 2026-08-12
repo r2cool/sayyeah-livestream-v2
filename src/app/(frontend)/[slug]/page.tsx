@@ -171,6 +171,7 @@ export default async function LivestreamPage(props: { params: Params }): Promise
               placeholder_password_form={stream.text_password_form?.placeholder || ''}
               buttonText_password_form={stream.text_password_form?.buttonText || ''}
               errorText_password_form={stream.text_password_form?.errorMessage || ''}
+              streamSlug={stream.slug || ''}
             />
           </div>
         </div>

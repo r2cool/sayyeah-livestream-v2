@@ -24,6 +24,7 @@ interface ChatClientProps {
   toastSuccessColor: string
   toastErrorColor: string
   initialUsername?: string
+  streamSlug?: string
 }
 
 export default function ChatClient({
@@ -40,6 +41,7 @@ export default function ChatClient({
   toastSuccessColor,
   toastErrorColor,
   initialUsername,
+  streamSlug,
 }: ChatClientProps): React.JSX.Element {
   const [msg, setMsg] = useState('')
   const [username] = useState(() => initialUsername || `${new Date().getTime()}`)
@@ -53,6 +55,7 @@ export default function ChatClient({
         arn: chatRoomArn,
         userId: username,
         attributes: {
+          stream_slug: streamSlug,
           username: username,
           avatar: 'undefined',
         },
