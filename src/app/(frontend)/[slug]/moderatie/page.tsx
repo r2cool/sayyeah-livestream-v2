@@ -1,6 +1,7 @@
 import React from 'react'
 import { getPayload } from 'payload'
 import { notFound } from 'next/navigation'
+import Image from 'next/image'
 import Script from 'next/script'
 import type { Metadata } from 'next'
 import config from '@/payload.config'
@@ -72,6 +73,27 @@ export default async function ModeratiePage(props: { params: Params }): Promise<
     }
   `
 
+  // Parse Logo — same pattern as the viewer page
+  let logoHtml: React.ReactNode = null
+  if (stream.logoType === 'svg' && stream.logoSvg) {
+    logoHtml = (
+      <div dangerouslySetInnerHTML={{ __html: stream.logoSvg }} style={{ fill: textColor }} />
+    )
+  } else if (stream.logoType === 'image' && stream.logoImage) {
+    const logoImg: any = stream.logoImage
+    if (typeof logoImg === 'object' && logoImg.url) {
+      logoHtml = (
+        <Image
+          src={logoImg.url}
+          alt={logoImg.alt || 'Logo'}
+          width={logoImg.width || 150}
+          height={logoImg.height || 40}
+          style={{ objectFit: 'contain', maxHeight: '80px', width: 'auto' }}
+        />
+      )
+    }
+  }
+
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: globalStyles }} />
@@ -82,7 +104,11 @@ export default async function ModeratiePage(props: { params: Params }): Promise<
       >
         <div className="container mx-auto max-w-screen-lg pb-12">
           <div className="p-4 md:p-0 mx-auto max-w-screen-lg relative">
-            <h1 className="text-2xl font-bold mt-8 mb-4">
+            <div className="mt-8 mb-4 flex items-center justify-between">
+              {logoHtml}
+              <span className="text-xs opacity-50">Moderatie paneel</span>
+            </div>
+            <h1 className="text-2xl font-bold mb-4">
               Moderatie — {stream.title}
             </h1>
 
