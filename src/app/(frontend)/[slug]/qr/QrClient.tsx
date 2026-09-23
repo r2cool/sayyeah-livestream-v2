@@ -8,7 +8,7 @@ interface QrClientProps {
   logoDataUrl: string | null
 }
 
-const QR_URL = 'https://live.studiosayyeh.nl'
+const QR_URL = 'https://live.studiosayyeah.nl'
 const LOGO_MAX_WIDTH_FRACTION = 0.25
 
 export default function QrClient({ slug, logoDataUrl }: QrClientProps) {
