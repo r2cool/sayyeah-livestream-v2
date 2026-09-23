@@ -8,7 +8,6 @@ interface QrClientProps {
   logoDataUrl: string | null
 }
 
-//URL
 const QR_URL = 'https://live.studiosayyeah.nl'
 const LOGO_MAX_WIDTH_FRACTION = 0.25
 

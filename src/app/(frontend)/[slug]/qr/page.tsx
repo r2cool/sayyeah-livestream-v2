@@ -60,9 +60,17 @@ async function fetchLogoDataUrl(logoImage: Media): Promise<string | null> {
   }
 }
 
-export default async function QrPage(props: { params: Params }): Promise<React.ReactNode> {
+type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>
+
+export default async function QrPage(props: {
+  params: Params
+  searchParams: SearchParams
+}): Promise<React.ReactNode> {
   const { slug } = await props.params
   const normalizedSlug = normalizeSlug(slug)
+
+  const sp = await props.searchParams
+  const showLogo = sp.logo !== '0'
   const payload = await getPayload({ config })
   const result = await payload.find({
     collection: 'livestreams',
@@ -94,12 +102,14 @@ export default async function QrPage(props: { params: Params }): Promise<React.R
   // Build logo data URL
   let logoDataUrl: string | null = null
 
-  if (stream.logoType === 'svg' && stream.logoSvg) {
-    logoDataUrl = `data:image/svg+xml;base64,${Buffer.from(stream.logoSvg).toString('base64')}`
-  } else if (stream.logoType === 'image' && stream.logoImage) {
-    const logoImg = stream.logoImage
-    if (typeof logoImg === 'object' && logoImg !== null && 'url' in logoImg) {
-      logoDataUrl = await fetchLogoDataUrl(logoImg as Media)
+  if (showLogo) {
+    if (stream.logoType === 'svg' && stream.logoSvg) {
+      logoDataUrl = `data:image/svg+xml;base64,${Buffer.from(stream.logoSvg).toString('base64')}`
+    } else if (stream.logoType === 'image' && stream.logoImage) {
+      const logoImg = stream.logoImage
+      if (typeof logoImg === 'object' && logoImg !== null && 'url' in logoImg) {
+        logoDataUrl = await fetchLogoDataUrl(logoImg as Media)
+      }
     }
   }
 
