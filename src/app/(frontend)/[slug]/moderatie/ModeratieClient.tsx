@@ -137,6 +137,10 @@ export default function ModeratieClient({
 
     activeRef.current = true
     const userId = `moderator-${Date.now()}`
+    const maxRetries = 3
+    const retryDelayMs = 3000
+    let retryCount = 0
+    let retryTimer: ReturnType<typeof setTimeout> | null = null
 
     const connect = async () => {
       try {
@@ -167,7 +171,7 @@ export default function ModeratieClient({
 
         if (!token) {
           if (activeRef.current) {
-            setSocketError('Kon geen chat token verkrijgen')
+            scheduleRetry('Kon geen chat token verkrijgen')
           }
           return
         }
@@ -180,6 +184,9 @@ export default function ModeratieClient({
             ws.close()
             return
           }
+          // Reset retry count and clear any error on successful connection
+          retryCount = 0
+          setSocketError('')
         }
 
         ws.onmessage = (event) => {
@@ -219,26 +226,57 @@ export default function ModeratieClient({
 
         ws.onerror = () => {
           if (activeRef.current) {
-            setSocketError('WebSocket verbinding mislukt')
+            scheduleRetry('WebSocket verbinding mislukt')
           }
         }
 
         ws.onclose = () => {
           if (activeRef.current) {
-            // Do not auto-reconnect per spec
+            scheduleRetry('Verbinding verbroken')
           }
         }
       } catch {
         if (activeRef.current) {
-          setSocketError('Kon geen chat token verkrijgen')
+          scheduleRetry('Kon geen chat token verkrijgen')
         }
       }
+    }
+
+    const scheduleRetry = (errorMessage: string) => {
+      if (retryTimer) {
+        clearTimeout(retryTimer)
+        retryTimer = null
+      }
+
+      retryCount++
+
+      if (retryCount > maxRetries) {
+        if (activeRef.current) {
+          setSocketError('Verbinding verbroken — ververs de pagina om opnieuw verbinding te maken')
+        }
+        return
+      }
+
+      // Show a transient message indicating a retry is happening
+      setSocketError(
+        `Verbinding verbroken — opnieuw verbinden (poging ${retryCount}/${maxRetries})...`,
+      )
+
+      retryTimer = setTimeout(() => {
+        if (activeRef.current) {
+          connect()
+        }
+      }, retryDelayMs)
     }
 
     connect()
 
     return () => {
       activeRef.current = false
+      if (retryTimer) {
+        clearTimeout(retryTimer)
+        retryTimer = null
+      }
       if (wsRef.current) {
         wsRef.current.close()
         wsRef.current = null
@@ -297,15 +335,19 @@ export default function ModeratieClient({
         <span
           className="inline-block w-2 h-2 rounded-full"
           style={{
-            backgroundColor: socketError ? '#ef4444' : '#22c55e',
+            backgroundColor: socketError ? '#f59e0b' : '#22c55e',
           }}
         />
-        <span>{socketError ? 'Verbinding mislukt' : 'Live verbinding actief'}</span>
+        <span>{socketError || 'Live verbinding actief'}</span>
       </div>
 
       {/* Socket error banner */}
       {socketError && (
-        <div className="mb-4 p-3 rounded-lg border border-red-300 bg-red-50/30 text-red-700 text-sm">
+        <div className={`mb-4 p-3 rounded-lg border text-sm ${
+          socketError.includes('ververs')
+            ? 'border-red-300 bg-red-50/30 text-red-700'
+            : 'border-amber-300 bg-amber-50/30 text-amber-700'
+        }`}>
           {socketError}
         </div>
       )}
