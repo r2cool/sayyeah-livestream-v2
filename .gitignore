@@ -54,3 +54,4 @@ node_modules/
 .wrangler
 
 pnpm-workspace.yaml
+/.pnpm-store
