@@ -1,5 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
+const normalizeSlug = (value: string): string => value.trim().toLowerCase()
+
 export const Livestreams: CollectionConfig = {
   slug: 'livestreams',
   admin: {
@@ -13,6 +15,15 @@ export const Livestreams: CollectionConfig = {
     update: () => true,
     delete: () => true,
   },
+  hooks: {
+    beforeValidate: [
+      ({ data }) => {
+        if (typeof data?.slug === 'string') {
+          data.slug = normalizeSlug(data.slug)
+        }
+      },
+    ],
+  },
   fields: [
     {
       name: 'title',
@@ -25,6 +36,30 @@ export const Livestreams: CollectionConfig = {
       required: true,
       unique: true,
       index: true,
+      validate: async (value: any, { req, id, data }: any) => {
+        const raw = typeof value === 'string' ? value : data?.slug ?? ''
+        const normalized = raw.trim().toLowerCase()
+        if (!normalized) {
+          return 'Slug is required'
+        }
+        const existing = await req.payload.find({
+          collection: 'livestreams',
+          where: {
+            slug: { equals: normalized },
+          },
+          depth: 0,
+          limit: 1,
+          pagination: false,
+        })
+        if (existing.docs.length > 0) {
+          const doc = existing.docs[0]
+          // On update, exclude the current document from the collision check
+          if (typeof id === 'undefined' || String(doc.id) !== String(id)) {
+            return `Slug "${normalized}" is already in use`
+          }
+        }
+        return true
+      },
     },
     {
       name: 'accessMode',

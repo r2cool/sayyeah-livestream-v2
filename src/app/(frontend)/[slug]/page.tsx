@@ -9,14 +9,17 @@ import LivestreamContentContainer from './LivestreamContentContainer'
 
 type Params = Promise<{ slug: string }>
 
+const normalizeSlug = (value: string): string => value.trim().toLowerCase()
+
 export async function generateMetadata(props: { params: Params }): Promise<Metadata> {
   const { slug } = await props.params
+  const normalizedSlug = normalizeSlug(slug)
   const payload = await getPayload({ config })
   const result = await payload.find({
     collection: 'livestreams',
     where: {
       slug: {
-        equals: slug,
+        equals: normalizedSlug,
       },
     },
   })
@@ -60,12 +63,13 @@ function getYoutubeEmbedUrl(urlOrId: string): string {
 
 export default async function LivestreamPage(props: { params: Params }): Promise<React.ReactNode> {
   const { slug } = await props.params
+  const normalizedSlug = normalizeSlug(slug)
   const payload = await getPayload({ config })
   const result = await payload.find({
     collection: 'livestreams',
     where: {
       slug: {
-        equals: slug,
+        equals: normalizedSlug,
       },
     },
   })
