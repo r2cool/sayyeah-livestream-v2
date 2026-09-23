@@ -88,6 +88,15 @@ export const Livestreams: CollectionConfig = {
       },
     },
     {
+      name: 'moderationPassword',
+      type: 'text',
+      label: 'Moderation Password',
+      admin: {
+        description:
+          'Optional password to gate access to /{slug}/moderatie. Leave empty to deny moderation access.',
+      },
+    },
+    {
       name: 'youtubeUrl',
       type: 'text',
       required: true,

@@ -175,6 +175,10 @@ export interface Livestream {
    */
   password?: string | null;
   /**
+   * Optional password to gate access to /{slug}/moderatie. Leave empty to deny moderation access.
+   */
+  moderationPassword?: string | null;
+  /**
    * Paste the YouTube video link (e.g. https://www.youtube.com/watch?v=XYZ), embed link, or 11-character video ID.
    */
   youtubeUrl: string;
@@ -353,6 +357,7 @@ export interface LivestreamsSelect<T extends boolean = true> {
   slug?: T;
   accessMode?: T;
   password?: T;
+  moderationPassword?: T;
   youtubeUrl?: T;
   logoType?: T;
   logoSvg?: T;

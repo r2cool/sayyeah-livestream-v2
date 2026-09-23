@@ -3,6 +3,7 @@ import * as migration_20260805_122858_my_livestreams_migration from './20260805_
 import * as migration_20260812_111544 from './20260812_111544';
 import * as migration_20260812_135409 from './20260812_135409';
 import * as migration_20260923_134656 from './20260923_134656';
+import * as migration_20261001_000000_add_moderation_password from './20261001_000000_add_moderation_password';
 
 export const migrations = [
   {
@@ -29,5 +30,10 @@ export const migrations = [
     up: migration_20260923_134656.up,
     down: migration_20260923_134656.down,
     name: '20260923_134656'
+  },
+  {
+    up: migration_20261001_000000_add_moderation_password.up,
+    down: migration_20261001_000000_add_moderation_password.down,
+    name: '20261001_000000_add_moderation_password'
   },
 ];
