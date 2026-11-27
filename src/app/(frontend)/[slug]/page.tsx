@@ -139,6 +139,11 @@ export default async function LivestreamPage(props: { params: Params }): Promise
         </>
       )}
       {globalStyles && <style dangerouslySetInnerHTML={{ __html: globalStyles }} />}
+      <Script
+        src="https://sayyeah-analytics.randy-1df.workers.dev/widget.js"
+        data-site="live-studiosayyeah-nl-h0jj"
+        strategy="beforeInteractive"
+      />
       <Script src="https://cdn.tailwindcss.com" strategy="beforeInteractive" />
 
       <div
