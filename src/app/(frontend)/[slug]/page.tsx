@@ -144,6 +144,11 @@ export default async function LivestreamPage(props: { params: Params }): Promise
         data-site="live-studiosayyeah-nl-h0jj"
         strategy="beforeInteractive"
       />
+      <Script
+        src="https://sayyeah-analytics.randy-1df.workers.dev/stream.js"
+        data-site="live-studiosayyeah-nl-h0jj"
+        strategy="beforeInteractive"
+      />
       <Script src="https://cdn.tailwindcss.com" strategy="beforeInteractive" />
 
       <div
