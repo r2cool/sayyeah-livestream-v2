@@ -1,5 +1,13 @@
 'use client'
 
+declare global {
+  interface Window {
+    __agChatIdentity?: () => {
+      name: string
+    }
+  }
+}
+
 import React, { useState } from 'react'
 import ChatClient from './ChatClient'
 
@@ -97,6 +105,7 @@ export default function LivestreamContentContainer({
       setErrorMsg('Gebruikersnaam moet minimaal 2 tekens bevatten')
       return
     }
+    window.__agChatIdentity = () => ({ name: trimmedUsername })
     setAuthUsername(trimmedUsername)
     setIsAuthenticated(true)
     setErrorMsg('')
