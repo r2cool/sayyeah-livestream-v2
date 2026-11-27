@@ -58,7 +58,7 @@ function getYoutubeEmbedUrl(urlOrId: string): string {
     const match = urlOrId.match(regExp)
     videoId = match && match[2].length === 11 ? match[2] : urlOrId
   }
-  return `https://www.youtube.com/embed/${videoId}?si=HFR4tI7UnMP2ZOjM`
+  return `https://www.youtube.com/embed/${videoId}?enablejsapi=1`
 }
 
 export default async function LivestreamPage(props: { params: Params }): Promise<React.ReactNode> {
